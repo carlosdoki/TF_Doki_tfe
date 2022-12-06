@@ -2,26 +2,32 @@ provider "tfe" {
   token = var.token
 }
 
+### Pegar as informacoes do Workspace de Template
 data "tfe_workspace" "template" {
   name         = var.template
   organization = var.organization
 }
 
+### Pegar o OAUHT_ID do GitHUb
 data "tfe_oauth_client" "client" {
   organization     = var.organization
   service_provider = "github"
 }
 
+### Pegar as informacoes das Variveis Globais
 data "tfe_variable_set" "test" {
   name         = var.variableSet
   organization = var.organization
 }
 
+### Pegar as informacoes da Policy
 data "tfe_policy_set" "test" {
   name         = var.policySet
   organization = var.organization
 }
 
+
+### Criacao do novo Workspace
 resource "tfe_workspace" "new" {
   depends_on = [
     data.tfe_workspace.template
@@ -39,6 +45,8 @@ resource "tfe_workspace" "new" {
   tag_names = [var.environment, var.project, var.resource, var.squad]
 }
 
+
+### Incluir as variaveis globais no Workspace
 resource "tfe_workspace_variable_set" "test" {
   depends_on = [
     tfe_workspace.new,
@@ -48,6 +56,8 @@ resource "tfe_workspace_variable_set" "test" {
   workspace_id    = tfe_workspace.new.id
 }
 
+
+### Incluir o Workspace criado no Policy
 resource "tfe_policy_set" "test" {
   depends_on = [
     tfe_workspace.new,
