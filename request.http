@@ -1,0 +1,75 @@
+@TOKEN=1bqRsG0boP1ujw.atlasv1.WylU4MagRJ16BHPJ22MhTjkqbiLxwxAxfa3FT2wf5gogz3HM34umyNrPoszzUD60dls
+
+#Criacao de Workspace CLI
+###
+POST https://app.terraform.io/api/v2/organizations/VortexLab/workspaces
+Content-Type: application/vnd.api+json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "data": {
+    "attributes": {
+      "name": "workspace-1"
+    },
+    "type": "workspaces"
+  }
+}
+
+#Criacao de Workspace com VCS
+###
+POST https://app.terraform.io/api/v2/organizations/VortexLab/workspaces
+Content-Type: application/vnd.api+json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "data": {
+    "attributes": {
+      "name": "srecoe-aks-template3-hlg",
+      "working-directory": "/AKS/Projeto3",
+      "vcs-repo": {
+        "identifier": "carlosdoki/TF_Via",
+        "oauth-token-id": "ot-4CmSN2WSagvQsLKH",
+        "branch": "HLG",
+        "tags-regex": null
+      },
+       "trigger-patterns": [
+        "/AKS/Projeto3/*"
+      ],
+      "updated-at": "2022-12-05T19:18:09.976Z",
+       "tag-names": [
+        "via",
+        "aks",
+        "hlg"
+      ]
+    },
+    "type": "workspaces"
+  }
+}
+
+###
+GET https://app.terraform.io/api/v2/organizations/VortexLab/workspaces/srecoe-aks-projeto2-hlg
+Content-Type: application/vnd.api+json
+Authorization: Bearer {{TOKEN}}
+
+###
+GET https://app.terraform.io/api/v2/workspaces/ws-WSiNS144g4yzrqeE/varsets
+Content-Type: application/vnd.api+json
+Authorization: Bearer {{TOKEN}}
+
+###
+GET https://app.terraform.io/api/v2/organizations/VortexLab/varsets
+Content-Type: application/vnd.api+json
+Authorization: Bearer {{TOKEN}}
+
+
+###
+GET https://app.terraform.io/api/v2/varsets/varset-9KLG6ZPjApctQ69v/relationships/vars
+Content-Type: application/vnd.api+json
+Authorization: Bearer {{TOKEN}}
+
+###
+POST https://app.terraform.io/api/v2/varsets/varset-MNMYwWtBtoFfkJ55/relationships/workspaces
+Content-Type: application/vnd.api+json
+Authorization: Bearer {{TOKEN}}
+
+{"data":[{"type":"workspaces","id":"ws-WSiNS144g4yzrqeE"}]}
