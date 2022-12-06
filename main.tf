@@ -31,10 +31,10 @@ resource "tfe_workspace" "new" {
   working_directory = data.tfe_workspace.template.working_directory
   trigger_patterns  = ["/${upper(var.resource)}/${upper(var.project)}/*"]
   vcs_repo {
-    branch             = data.tfe_workspace.template.vcs_repo[0].branch
+    branch             = var.environment
     identifier         = var.git
     ingress_submodules = data.tfe_workspace.template.vcs_repo[0].ingress_submodules
-    oauth_token_id     = data.tfe_oauth_client.client.id
+    oauth_token_id     = data.tfe_oauth_client.client.oauth_token_id
   }
   tag_names = [var.environment, var.project, var.resource, var.squad]
 }
@@ -60,7 +60,7 @@ resource "tfe_policy_set" "test" {
   vcs_repo {
     identifier         = data.tfe_policy_set.test.vcs_repo[0].identifier
     ingress_submodules = data.tfe_policy_set.test.vcs_repo[0].ingress_submodules
-    oauth_token_id     = data.tfe_oauth_client.client.id
+    oauth_token_id     = data.tfe_oauth_client.client.oauth_token_id
   }
 }
 
